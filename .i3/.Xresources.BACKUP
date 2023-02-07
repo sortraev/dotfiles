@@ -1,0 +1,210 @@
+Xft.dpi:       96
+Xft.antialias: true
+Xft.hinting:   true
+Xft.rgba:      rgb
+Xft.autohint:  true
+Xft.hintstyle: hintslight
+Xft.lcdfilter: lcddefault
+
+*fading:                          8
+
+Xcursor.theme: xcursor-breeze
+Xcursor.size:  0
+
+URxvt.font:                       xft:Gohu\ Gohufont:size=10
+! URxvt.font:                       xft:xos4\ Terminus:style=Bold:size=16
+
+
+URxvt.depth:                      32
+URxvt*scrollBar:                  false
+URxvt*mouseWheelScrollPage:       false
+URxvt*cursorBlink:                false
+URxvt*cursorUnderline:            false
+URxvt*pointerBlank:               true
+URxvt*saveLines:                  5000
+URxvt*thickness:                  100
+URxvt.iso14755:                   false
+
+! Normal copy-paste keybindings without perls
+URxvt.keysym.Shift-Control-V:     eval:paste_clipboard
+URxvt.keysym.Shift-Control-C:     eval:selection_to_clipboard
+
+
+
+!!!!!!!!!!! forest_night
+
+!!! special
+*.foreground:   #d8caac
+*.background:   #262626
+*.cursorColor:  #d8caac
+
+! 868280
+!!! black
+! *.color0:       #868d80
+*.color0:       #262626
+*.color8:       #868d80
+
+!!! red
+*.color1:       #e68183
+*.color9:       #e68183
+! red (ls executables)
+! *.color10:      #e05652
+! *.color10:      #00ff00
+*.color10:      #1daf84
+
+! green - among others, used by git diff and Windows directores in colored ls output
+*.color2:       #a7c080
+! *.color2:       #464646
+
+
+
+!!! yellow
+*.color3:       #d9bb80
+*.color11:      #d9bb80
+
+!!! blue
+*.color4:       #89beba
+*.color12:      #89beba
+
+!!! magenta
+*.color5:       #d3a0bc
+*.color13:      #d3a0bc
+
+!!! cyan
+*.color6:       #87c095
+! *.color14:      #87c095
+
+! PWD color
+*.color14:      #87c095
+! *.color14:      #7eab89
+
+!!! white
+*.color7:       #d8caac
+*.color15:      #d8caac
+
+
+
+URxvt.keysym.Control-f: exec fg
+
+
+!!!!!!!!!!! seoul256 dark colors
+
+! URxvt*background: #3a3a3a
+! URxvt*foreground: #d0d0d0
+! URxvt*color0: #4e4e4e
+! URxvt*color1: #d68787
+! URxvt*color2: #5f865f
+! URxvt*color3: #d8af5f
+! URxvt*color4: #85add4
+! URxvt*color5: #d7afaf
+! URxvt*color6: #87afaf
+! URxvt*color7: #d0d0d0
+! URxvt*color8: #626262
+! URxvt*color9: #d75f87
+! URxvt*color10: #87af87
+! URxvt*color11: #ffd787
+! URxvt*color12: #add4fb
+! URxvt*color13: #ffafaf
+! URxvt*color14: #87d7d7
+! URxvt*color15: #e4e4e4
+! ! URxvt*cursorColor: #d0d0d0
+! URxvt*cursorColor: #b0b0b0
+! URxvt*cursorColor2: #3a3a3a
+! URxvt*colorBD: #e4e4e4
+
+!!!!!!!!!!!!!!!!! seoul256 light colors
+
+! URxvt*background: #dadada
+! URxvt*foreground: #4e4e4e
+! URxvt*color0: #4e4e4e
+! URxvt*color1: #af5f5f
+! URxvt*color2: #5f885f
+! URxvt*color3: #af8760
+! URxvt*color4: #5f87ae
+! URxvt*color5: #875f87
+! URxvt*color6: #5f8787
+! URxvt*color7: #e4e4e4
+! URxvt*color8: #3a3a3a
+! URxvt*color9: #870100
+! URxvt*color10: #005f00
+! URxvt*color11: #d8865f
+! URxvt*color12: #0087af
+! URxvt*color13: #87025f
+! URxvt*color14: #008787
+! URxvt*color15: #eeeeee
+! URxvt*cursorColor: #4e4e4e
+! URxvt*cursorColor2: #dadada
+! URxvt*colorBD: #3a3a3a
+
+
+!!!!!!!!!!!!!!!!! misc
+
+! rofi desktop application launcher
+rofi.color-enabled:  true
+rofi.color-window:   #1c1c1c, #ededed, #1c1c1c
+rofi.color-normal:   #1c1c1c, #bcbcbc, #1c1c1c, #bcbcbc, #000000
+rofi.color-urgent:   #002b37, #da4281, #003643, #008ed4, #890661
+rofi.lines:          10
+rofi.font:           Gohu\ Gohufont\ 9
+rofi.hide-scrollbar: true
+
+
+vim.internalBorder: -10
+
+! Base16 Gruvbox dark, pale
+! Scheme: Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
+
+! Base16 Gruvbox dark, soft
+! Scheme: Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
+
+#define base00 #32302f
+#define base01 #3c3836
+#define base02 #504945
+#define base03 #665c54
+#define base04 #bdae93
+#define base05 #d5c4a1
+#define base06 #ebdbb2
+#define base07 #fbf1c7
+#define base08 #fb4934
+#define base09 #fe8019
+#define base0A #fabd2f
+#define base0B #b8bb26
+#define base0C #8ec07c
+#define base0D #83a598
+#define base0E #d3869b
+#define base0F #d65d0e
+
+*.foreground:   base05
+#ifdef background_opacity
+*.background:   [background_opacity]base00
+#else
+*.background:   base00
+#endif
+*.cursorColor:  base05
+
+*.color0:       base00
+*.color1:       base08
+*.color2:       base0B
+*.color3:       base0A
+*.color4:       base0D
+*.color5:       base0E
+*.color6:       base0C
+*.color7:       base05
+
+*.color8:       base03
+*.color9:       base08
+*.color10:      base0B
+*.color11:      base0A
+*.color12:      base0D
+*.color13:      base0E
+*.color14:      base0C
+*.color15:      base07
+
+! Note: colors beyond 15 might not be loaded (e.g., xterm, urxvt),
+! use 'shell' template to set these if necessary
+*.color16:      base09
+*.color17:      base0F
+*.color18:      base01
+*.color19:      base02
+*.color20:      base04
+*.color21:      base06

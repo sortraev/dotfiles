@@ -1,0 +1,30 @@
+set font "Gohu\ Gohufont"
+# set default-bg  "#dddddd" # light background
+# set default-bg  "#32302f" # dark background color from terminal
+set default-bg "#222222" # dark background for recoloring
+
+set inputbar-bg "#32302f"
+set inputbar-fg "#d5c4a1"
+
+set statusbar-bg "#32302f"
+set statusbar-fg "#d5c4a1"
+
+
+
+# recolor colors (inverted colors)
+set recolor-lightcolor "#32302f"
+# keep some of the colors when inverting.
+set recolor-keephue
+
+
+
+map - zoom out
+map = zoom in
+map + zoom reset
+
+set sandbox none
+
+map <C-i> recolor
+set recolor true # start in inverted colors.
+
+map q zoom in # hack to disable quitting with q.

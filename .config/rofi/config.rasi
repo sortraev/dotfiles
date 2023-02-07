@@ -1,0 +1,5 @@
+configuration {
+	font: "Gohu Gohufont 12";
+    
+}
+@theme "oxide"
