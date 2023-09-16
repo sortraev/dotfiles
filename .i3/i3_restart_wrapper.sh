@@ -19,7 +19,13 @@ cat $configs_dir/app_specifics.conf     >> $config  # settings specific to diffe
 cat $configs_dir/statusbar.conf         >> $config  # i3bar stuff. comment when using polybar.
 cat $configs_dir/last.conf              >> $config  # stuff to be executed after everything else
 
-i3 restart
+
+# temporary hack
+if [[ $1 == "start" ]]; then
+  i3
+else
+  i3 restart
+fi
 
 ## kill any existing polybar instances.
 # killall -q polybar

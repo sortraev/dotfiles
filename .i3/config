@@ -255,7 +255,10 @@ bindsym $mod+s sticky toggle
 ### misc keybindings
 
 # launch terminal. can replace `urxvt` with `terminal` if this is setup.
-bindsym $mod+e exec urxvt
+bindsym $mod+e exec urxvt # st
+bindsym $mod+shift+e exec urxvt -geometry 84x34 -name "floating_urxvt"
+
+# bindsym $mod+shift+e exec st
 
 # google chrome
 bindsym $mod+g exec google-chrome-stable
@@ -274,7 +277,7 @@ bindsym $mod+F3 exec nemo
 
 # screenshotting. Print screen for fullscreen; shift+print screen for snipping tool.
 # bindsym Print exec maim ~/Pictures/Screenshots/$(date +%d-%m-%y_%H:%M:%S).png
-bindsym Print exec ~/.i3/screenshot.sh
+bindsym Print exec ~/.i3/screenshot_non_overwriting.sh
 bindsym Shift+Print exec maim --hidecursor -s ~/Pictures/Screenshots/$(date +%d-%m-%y_%H:%M:%S).png
 bindsym Ctrl+Print exec maim --hidecursor -s | xclip -selection clipboard -t image/png
 
@@ -313,7 +316,6 @@ bindsym XF86AudioRaiseVolume exec "amixer set 'Master' 5%+"
 bindsym XF86AudioMute exec "/home/sortraev/.i3/toggle_mute.sh"
 
 
-
 ### app specifics
 
 # set border width to 2 for all windows but urxvt, which gets 1.
@@ -342,7 +344,9 @@ for_window [class="matplotlib"] floating enable
 for_window [class="Matplotlib"] floating enable
 
 # switch to workspace with urgent window automatically
-for_window [urgent=latest] focus
+for_window [class=latest] focus
+
+for_window [class="URxvt" instance="floating_urxvt$"] floating enable
 
 
 # assign programs to specific workspaces
@@ -385,7 +389,7 @@ for_window [urgent=latest] focus
 exec feh --bg-center ~/Pictures/Minolta/y/aa.jpg # helsingør/helsingborg-færge (+gustav)
 
 # set keyboard settings
-exec $HOME/.i3/set_kb.sh
+# exec $HOME/.i3/set_kb.sh
 
 # polybar
 exec --no-startup-id killall polybar; polybar -r main

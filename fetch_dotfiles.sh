@@ -16,7 +16,7 @@ cp -r $HOME/.config/nemo            .config/
 cp -r $HOME/.config/nvim            .config/
 cp -r $HOME/.config/picom           .config/
 cp -r $HOME/.config/polybar         .config/
-cp -r $HOME/.config/pulse           .config/
+# cp -r $HOME/.config/pulse           .config/
 cp -r $HOME/.config/rofi            .config/
 cp -r $HOME/.config/zathura         .config/
 cp -r $HOME/.config/mimeapps.list   .config/

@@ -22,6 +22,7 @@ map - zoom out
 map = zoom in
 map + zoom reset
 
+
 set sandbox none
 
 map <C-i> recolor

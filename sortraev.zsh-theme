@@ -1,5 +1,4 @@
 
-# Grab the current filepath, use shortcuts: ~/Desktop
 # Append the current git branch, if in a git repository
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[white]%} <%{$fg[green]%}"

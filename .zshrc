@@ -1,13 +1,13 @@
 # Path to your oh-my-zsh installation.
 
 
-export PATH=$PATH:/home/sortraev/.local/bin
+export PATH=/home/sortraev/.local/bin:~/google-cloud-sdk:$PATH
 export ZSH="$HOME/.oh-my-zsh"
 setopt globdots
 
 ZSH_THEME="sortraev"
 
-export UPDATE_ZSH_DAYS=1
+export UPDATE_ZSH_DAYS=3
 
 # plugins=(git, z)
 plugins=(
@@ -44,13 +44,11 @@ alias l2='ll2  -A'
 # same as above, but using exa.
 alias ll='exa -l --no-user --group-directories-first'
 alias l='ll -a' # same as above, but also show hidden files.
+alias ls=l
 alias llt="ll -T -L2"
 alias llt3="ll -T -L3"
 alias lt="l -T -L2"
 alias lt3="l -T -L3"
-
-
-
 
 alias v="nvim"
 alias c='tput reset && tput cup $LINES 0'
@@ -67,8 +65,6 @@ alias du="du -h --max-depth=1"
 alias feh="feh --scale-down"
 alias diff="diff --color=always"
 
-alias whichgpu="optimus-manager --print-mode"
-
 alias cmatrix="cmatrix -C red -u 10 -b"
 
 alias fut="futhark repl"
@@ -78,10 +74,22 @@ alias ipy="ipython"
 alias gcc="gcc -Wall -pedantic"
 alias grep='rg'
 
-alias brighthi="xrandr --output eDP-1 --brightness 0.8"
-alias brightlo="xrandr --output eDP-1 --brightness 0.4"
-
 alias hist='tail -n64 ~/.zsh_history | sort -rn | rg -j 1 "^.*?;" -r "" | fzf'
+
+alias gs='git status'
+
+alias mylayout="~/.i3/set_kb.sh"
+alias dklayout="setxkbmap -layout dk"
+
+alias objdump='objdump -M intel'
+
+alias gpl="git pull"
+
+alias readelf='readelf -W'
+
+alias sshfut1='sshpass -p lentetdouloureux ssh fut01'
+alias sshfut2='sshpass -p lentetdouloureux ssh fut02'
+alias sshfut3='sshpass -p lentetdouloureux ssh fut03'
 
 
 # Make ^Z toggle between ^Z and fg
@@ -117,7 +125,7 @@ export FZF_CTRL_R_COMMAND="$FZF_CTRL_R_OPTS"
 
 # Change directory widget
 function changedir() {
-  TARGET_DIR=$(fzf_changedir)
+  TARGET_DIR=$(fzf_changedir $1)
   if [ $? -eq 0 ]; then
     cd "$TARGET_DIR"
   fi
@@ -126,17 +134,40 @@ function changedir() {
 zle -N changedir
 bindkey '^g' changedir
 
-# Change directory widget (with (more) hidden files)
 function changedir_no_ignore() {
-  TARGET_DIR=$(fzf_changedir_no_ignore)
-  if [ $? -eq 0 ]; then
-    cd "$TARGET_DIR"
+  changedir DUMMY
+}
+zle -N changedir_no_ignore
+bindkey '^G' changedir_no_ignore
+
+bindkey -s '^f' " fzf_fif\n"
+
+function openfiles() {
+  TARGET_FILES=$(fd --hidden --exclude ".git" --no-ignore --type f | fzf -m)
+  if [ $TARGET_FILES != "" ]; then
+    echo $TARGET_FILES | xargs o
+    # /home/sortraev/.local/bin/o $TARGET_FILES
   fi
   zle reset-prompt
 }
-zle -N changedir_no_ignore
-bindkey '^h' changedir_no_ignore
+zle -N openfiles
+bindkey '^o' openfiles
 
-bindkey -s '^f' 'fzf_fif\n'
+# better formatting for the time built-in.
+TIMEFMT=$'\n%J\n%U user\n%S system\n%P cpu\n%*E total'
 
 tput cup $LINES 0
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/sortraev/google-cloud-sdk/path.zsh.inc' ]; then . '/home/sortraev/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/sortraev/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/sortraev/google-cloud-sdk/completion.zsh.inc'; fi
+
+
+
+## CUDA PATH STUFF
+export CPATH=/opt/cuda/include:$CPATH
+export LIBRARY_PATH=/opt/cuda/lib64:$LIBRARY_PATH
+export LD_LIBRARY_PATH=/opt/cuda/lib64/$LD_LIBRARY_PATH
+export PATH=/opt/cuda/bin:$PATH

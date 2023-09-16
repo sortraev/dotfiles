@@ -7,13 +7,10 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-
 Plugin 'sheerun/vim-polyglot'
-
 Plugin 'psliwka/vim-smoothie'
 
 Plugin 'iamcco/markdown-preview.nvim'
-" Plugin 'iamcco/markdown-preview.nvim'
 " for normal mode
 nmap <silent> <F8> <Plug>MarkdownPreview
 " for insert mode
@@ -59,8 +56,7 @@ let g:NERDCustomDelimiters = {
     \ 'c': { 'left': '//'},
     \ 'fsharp': { 'left': '//'},
     \ 'fasto': { 'left': '//'},
-    \ 'asm':   { 'left': '#'},
-    \ 'htmldjango': { 'left': '<!--', 'right': '-->' }
+    \ 'asm':   { 'left': ';'},
 \ }
 map <C-e> <plug>NERDCommenterToggle
 
@@ -93,7 +89,7 @@ let g:mapleader=","
 
 " Fast saving and quitting
 nmap <leader>w :w!<cr>
-" nmap <leader>wq :wq!<cr>
+nmap <leader>wq :wq!<cr>
 
 " (useful for handling the permission-denied error)
 command Sudow w !sudo tee % > /dev/null
@@ -500,4 +496,8 @@ tnoremap <s-tab> <C-\><C-n>
 nmap <leader>m :w<CR>:!make<cr>
 nmap <leader>M :w<CR>:!make<space>
 
-nmap <leader>be wbi\begin{<Esc>lyeea}<CR>\end{<Esc>pa}<Esc>
+nmap <leader>be lbi\begin{<Esc>lyeea}<CR>\end{<Esc>pa}<Esc>
+autocmd BufNewFile,BufReadPost *.asm,*.s,*.disasm set filetype=asm
+
+" paste in visual mode without overwriting register with the overwritten text
+xnoremap p pgvy
