@@ -21,10 +21,9 @@ let g:mkdp_browser='google-chrome-stable'
 set updatetime=100
 
 
-
-
 """""""""""""""" lightline 
 Plugin 'itchyny/lightline.vim'
+let g:lightline = {}
 let g:lightline = {
       \ 'colorscheme': 'seoul256',
       \ 'active': {
@@ -33,6 +32,7 @@ let g:lightline = {
       \ },
       \ }
 
+      " \ 'colorscheme': 'PaperColor',
 
 Plugin 'scrooloose/nerdcommenter'
 " Add spaces after comment delimiters by default
@@ -54,16 +54,25 @@ let g:NERDToggleCheckAllLines = 1
 let g:NERDCustomDelimiters = {
     \ 'fut': { 'left': '--'},
     \ 'c': { 'left': '//'},
+    \ 'opencl': { 'left': '//'},
     \ 'fsharp': { 'left': '//'},
     \ 'fasto': { 'left': '//'},
     \ 'asm':   { 'left': ';'},
+    \ 'bib':   { 'left': '%'},
 \ }
 map <C-e> <plug>NERDCommenterToggle
 
 "" color schemes
 Plugin 'sainnhe/forest-night'
 Plugin 'morhetz/gruvbox'
+Plugin 'NLKNguyen/papercolor-theme'
 
 "" futhark syntax highlighting
+
+Plugin 'nvim-lua/plenary.nvim'
+
+Plugin 'tigion/nvim-asciidoc-preview'
+
+let g:haskell_indent_if=2
 
 call vundle#end()

@@ -26,6 +26,6 @@ map + zoom reset
 set sandbox none
 
 map <C-i> recolor
-set recolor true # start in inverted colors.
+# set recolor true # start in inverted colors.
 
 map q zoom in # hack to disable quitting with q.

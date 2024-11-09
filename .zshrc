@@ -2,6 +2,20 @@
 
 
 export PATH=/home/sortraev/.local/bin:~/google-cloud-sdk:$PATH
+
+## CUDA PATH STUFF
+export CPATH=$CPATH:/opt/cuda/include
+export LIBRARY_PATH=$LIBRARY_PATH:/opt/cuda/lib64
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/cuda/lib64/
+export PATH=$PATH:/opt/cuda/bin
+
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/sortraev/google-cloud-sdk/path.zsh.inc' ]; then . '/home/sortraev/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/sortraev/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/sortraev/google-cloud-sdk/completion.zsh.inc'; fi
+
 export ZSH="$HOME/.oh-my-zsh"
 setopt globdots
 
@@ -28,21 +42,19 @@ export VISUAL=nvim
 
 #### ALIASES
 alias zshrc='nvim $HOME/.zshrc'
-alias nvimrc='nvim $HOME/.config/nvim/.nvimrc'
 
 alias ggwp='pkill -u sortraev'
 alias sov="systemctl suspend"
-alias genstart="shutdown -r +0"
 
 alias ny="urxvt &>/dev/null & disown"
 alias svim="sudo -E nvim"
-
+alias sv=svim
 
 alias ll2='ls -pghG --group-directories-first --time-style="+%d-%m %H:%M"'
 alias l2='ll2  -A'
 
 # same as above, but using exa.
-alias ll='exa -l --no-user --group-directories-first'
+alias ll='eza -l --no-user --group-directories-first'
 alias l='ll -a' # same as above, but also show hidden files.
 alias ls=l
 alias llt="ll -T -L2"
@@ -51,7 +63,8 @@ alias lt="l -T -L2"
 alias lt3="l -T -L3"
 
 alias v="nvim"
-alias c='tput reset && tput cup $LINES 0'
+alias c='tput reset; tput cup $LINES 0'
+# alias c='tput reset'
 
 alias j="jobs"
 alias f="fg"
@@ -62,8 +75,9 @@ alias f4="fg %4"
 
 # wrappers.
 alias du="du -h --max-depth=1"
-alias feh="feh --scale-down"
+alias feh="feh --scale-down -g 1268x720"
 alias diff="diff --color=always"
+alias fd="fd -H"
 
 alias cmatrix="cmatrix -C red -u 10 -b"
 
@@ -72,25 +86,40 @@ alias py="python"
 alias ipy="ipython"
 
 alias gcc="gcc -Wall -pedantic"
-alias grep='rg'
 
 alias hist='tail -n64 ~/.zsh_history | sort -rn | rg -j 1 "^.*?;" -r "" | fzf'
 
 alias gs='git status'
 
-alias mylayout="~/.i3/set_kb.sh"
+alias mylayout="~/.config/i3/set_kb.sh"
 alias dklayout="setxkbmap -layout dk"
 
 alias objdump='objdump -M intel'
 
 alias gpl="git pull"
+alias gl="git log"
+alias gc="git commit"
+alias gca="git commit --amend"
+alias gcane="git commit --amend --no-edit"
 
 alias readelf='readelf -W'
 
-alias sshfut1='sshpass -p lentetdouloureux ssh fut01'
-alias sshfut2='sshpass -p lentetdouloureux ssh fut02'
-alias sshfut3='sshpass -p lentetdouloureux ssh fut03'
+alias sshhendrix='sshpass -f  ~/.ssh/ku_pass ssh hendrix'
+alias sshhendrix1='sshpass -f ~/.ssh/ku_pass ssh hendrix1'
+alias sshhendrix3='sshpass -f ~/.ssh/ku_pass ssh hendrix3'
+alias sshfut1='sshpass -f ~/.ssh/ku_pass ssh futhark01'
+alias sshfut2='sshpass -f ~/.ssh/ku_pass ssh futhark02'
+alias sshfut3='sshpass -f ~/.ssh/ku_pass ssh futhark03'
+alias scppass='sshpass -f ~/.ssh/ku_pass scp'
 
+alias woman=man
+
+# alias futbuild='make -C $HOME/repos/futhark build && make -C $HOME/repos/futhark install && scp /home/sortraev/.local/bin/futhark sortraev@powervan:/home/sortraev/.local/bin'
+# alias futbuild='make -C $HOME/repos/futhark build && make -C $HOME/repos/futhark install'
+# alias futm=futbuild
+
+alias faceon='xrandr --output HDMI-A-0 --auto --primary --output eDP --off'
+alias faceoff='xrandr --output eDP --auto --primary --output HDMI-A-0 --off'
 
 # Make ^Z toggle between ^Z and fg
 function to_foreground() {
@@ -105,6 +134,16 @@ bindkey '^Z' to_foreground
 
 
 ### fzf config
+if [[ ! "$PATH" == */home/sortraev/.fzf/bin* ]]; then
+  PATH="${PATH:+${PATH}:}/home/sortraev/.fzf/bin"
+fi
+
+# Auto-completion
+[[ $- == *i* ]] && source "/home/sortraev/.fzf/shell/completion.zsh" 2> /dev/null
+
+# Key bindings
+source "/home/sortraev/.fzf/shell/key-bindings.zsh"
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_COMPLETION_OPTS='+c'
 _fzf_compgen_path() {
@@ -119,26 +158,26 @@ _fzf_compgen_dir() {
 export FZF_DEFAULT_OPTS='--ansi --reverse --height=60% --border=bottom'
 export FZF_DEFAULT_COMMAND=' fd --hidden --exclude ".git" --no-ignore --type f . '
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND="fd -t d . $HOME"
+export FZF_ALT_C_COMMAND=" fd -t d . $HOME"
 export FZF_CTRL_R_OPTS='--ansi'
 export FZF_CTRL_R_COMMAND="$FZF_CTRL_R_OPTS"
 
 # Change directory widget
-function changedir() {
-  TARGET_DIR=$(fzf_changedir $1)
+function dirfind() {
+  TARGET_DIR=$(fzf_dirfind $1)
   if [ $? -eq 0 ]; then
     cd "$TARGET_DIR"
   fi
   zle reset-prompt
 }
-zle -N changedir
-bindkey '^g' changedir
+zle -N dirfind
+bindkey '^g' dirfind
 
-function changedir_no_ignore() {
-  changedir DUMMY
+function dirfind_no_ignore() {
+  dirfind DUMMY
 }
-zle -N changedir_no_ignore
-bindkey '^G' changedir_no_ignore
+zle -N dirfind_no_ignore
+bindkey '^G' dirfind_no_ignore
 
 bindkey -s '^f' " fzf_fif\n"
 
@@ -156,18 +195,28 @@ bindkey '^o' openfiles
 # better formatting for the time built-in.
 TIMEFMT=$'\n%J\n%U user\n%S system\n%P cpu\n%*E total'
 
+
+
+function futm() {
+  # Build Futhark
+  # if [[ $(make -C $HOME/repos/futhark build) -ne 0 ]]; then
+
+  BINNAME="futhark"
+  if [[ $# -ne 0 ]]; then
+    # If arg is 0, don't install.
+    BINNAME="$1"
+  fi
+  INSTALLBIN="~/.local/bin/$BINNAME"
+  taskset -c 0-16 make -C $HOME/repos/futhark INSTALLBIN=$INSTALLBIN install
+}
+
+tput reset
 tput cup $LINES 0
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/sortraev/google-cloud-sdk/path.zsh.inc' ]; then . '/home/sortraev/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/sortraev/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/sortraev/google-cloud-sdk/completion.zsh.inc'; fi
+[ -f "/home/sortraev/.ghcup/env" ] && source "/home/sortraev/.ghcup/env" # ghcup-env
 
 
-
-## CUDA PATH STUFF
-export CPATH=/opt/cuda/include:$CPATH
-export LIBRARY_PATH=/opt/cuda/lib64:$LIBRARY_PATH
-export LD_LIBRARY_PATH=/opt/cuda/lib64/$LD_LIBRARY_PATH
-export PATH=/opt/cuda/bin:$PATH
+function sshfut() {
+  sshpass -f $HOME/.ssh/ku_pass ssh "futhark0$1"
+}
+zle -N sshfut

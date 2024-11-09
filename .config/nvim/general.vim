@@ -126,6 +126,12 @@ let g:gruvbox_italic=1
 let g:gruvbox_contrast_dark="soft"
 let g:gruvbox_improved_warnings=0
 colo gruvbox
+"
+"
+set t_Co=256   " This is may or may not needed.
+
+" set background=light
+" colo PaperColor
 
 
 " Show matching brackets when text indicator is over them

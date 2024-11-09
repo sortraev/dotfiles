@@ -16,8 +16,10 @@ imap <tab> <C-n>
 imap <A-tab> <C-p>
 
 
-" remove trailing whitespace from every line in file.
-nmap <leader>tws :%s/\s\+$<CR>:noh<CR>
+
+" remove trailing whitespace from every line in file (ignore error message on no
+" trailing whitespace).
+nmap <leader>tws :keeppatterns %s/\s\+$//e<CR>:noh<CR>
 
 " treat \( as ( in haskell code in terms of jumping to matching brackets
 set cpoptions+=M

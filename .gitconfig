@@ -1,7 +1,5 @@
 [user]
 	email = anersholst@gmail.com
 	name = sortraev
-[core]
-	editor = nvim
 [init]
 	defaultBranch = main
