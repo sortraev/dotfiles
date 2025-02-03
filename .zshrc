@@ -7,7 +7,15 @@ export PATH=/home/sortraev/.local/bin:~/google-cloud-sdk:$PATH
 export CPATH=$CPATH:/opt/cuda/include
 export LIBRARY_PATH=$LIBRARY_PATH:/opt/cuda/lib64
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/cuda/lib64/
-export PATH=$PATH:/opt/cuda/bin
+export PATH=$PATH:/opt/cuda/bin:/opt/idea-IU-243.22562.218/bin
+
+alias sshhendrix='sshpass -f  ~/.ssh/ku_pass ssh hendrix'
+alias sshhendrix1='sshpass -f ~/.ssh/ku_pass ssh hendrix1'
+alias sshhendrix3='sshpass -f ~/.ssh/ku_pass ssh hendrix3'
+alias sshfut1='sshpass -f ~/.ssh/ku_pass ssh futhark01'
+alias sshfut2='sshpass -f ~/.ssh/ku_pass ssh futhark02'
+alias sshfut3='sshpass -f ~/.ssh/ku_pass ssh futhark03'
+alias scppass='sshpass -f ~/.ssh/ku_pass scp'
 
 
 # The next line updates PATH for the Google Cloud SDK.
@@ -26,6 +34,7 @@ export UPDATE_ZSH_DAYS=3
 # plugins=(git, z)
 plugins=(
   git
+  # zsh-vi-mode
 )
 
 ZSH_DISABLE_COMPFIX=true
@@ -54,6 +63,7 @@ alias ll2='ls -pghG --group-directories-first --time-style="+%d-%m %H:%M"'
 alias l2='ll2  -A'
 
 # same as above, but using exa.
+alias ls_=/usr/bin/ls
 alias ll='eza -l --no-user --group-directories-first'
 alias l='ll -a' # same as above, but also show hidden files.
 alias ls=l
@@ -118,6 +128,7 @@ alias woman=man
 # alias futbuild='make -C $HOME/repos/futhark build && make -C $HOME/repos/futhark install'
 # alias futm=futbuild
 
+alias dualscreen='xrandr --output HDMI-A-0 --above eDP --auto'
 alias faceon='xrandr --output HDMI-A-0 --auto --primary --output eDP --off'
 alias faceoff='xrandr --output eDP --auto --primary --output HDMI-A-0 --off'
 
@@ -134,15 +145,17 @@ bindkey '^Z' to_foreground
 
 
 ### fzf config
-if [[ ! "$PATH" == */home/sortraev/.fzf/bin* ]]; then
-  PATH="${PATH:+${PATH}:}/home/sortraev/.fzf/bin"
+fzf_dir=$HOME/repos/fzf
+
+if [[ ! "$PATH" == *$fzf_dir/bin* ]]; then
+  PATH="${PATH:+${PATH}:}$fzf_dir/bin"
 fi
 
 # Auto-completion
-[[ $- == *i* ]] && source "/home/sortraev/.fzf/shell/completion.zsh" 2> /dev/null
+[[ $- == *i* ]] && source "$fzf_dir/shell/completion.zsh" 2> /dev/null
 
 # Key bindings
-source "/home/sortraev/.fzf/shell/key-bindings.zsh"
+source "$fzf_dir/shell/key-bindings.zsh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_COMPLETION_OPTS='+c'
@@ -155,7 +168,7 @@ _fzf_compgen_dir() {
   fd --type d --hidden --follow --exclude ".git" . "$1"
 }
 
-export FZF_DEFAULT_OPTS='--ansi --reverse --height=60% --border=bottom'
+export FZF_DEFAULT_OPTS='--ansi --reverse --height=50% --border=none'
 export FZF_DEFAULT_COMMAND=' fd --hidden --exclude ".git" --no-ignore --type f . '
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND=" fd -t d . $HOME"
@@ -177,15 +190,21 @@ function dirfind_no_ignore() {
   dirfind DUMMY
 }
 zle -N dirfind_no_ignore
-bindkey '^G' dirfind_no_ignore
+bindkey '^h' dirfind_no_ignore
 
-bindkey -s '^f' " fzf_fif\n"
+function fzf_fif_wrapper() {
+  fzf_fif
+  zle reset-prompt
+}
+zle -N fzf_fif_wrapper
+bindkey '^f' fzf_fif_wrapper
 
 function openfiles() {
   TARGET_FILES=$(fd --hidden --exclude ".git" --no-ignore --type f | fzf -m)
   if [ $TARGET_FILES != "" ]; then
-    echo $TARGET_FILES | xargs o
-    # /home/sortraev/.local/bin/o $TARGET_FILES
+    echo $TARGET_FILES | xargs nvim
+  else
+    echo No files
   fi
   zle reset-prompt
 }
@@ -195,28 +214,24 @@ bindkey '^o' openfiles
 # better formatting for the time built-in.
 TIMEFMT=$'\n%J\n%U user\n%S system\n%P cpu\n%*E total'
 
-
-
 function futm() {
   # Build Futhark
-  # if [[ $(make -C $HOME/repos/futhark build) -ne 0 ]]; then
 
   BINNAME="futhark"
   if [[ $# -ne 0 ]]; then
-    # If arg is 0, don't install.
     BINNAME="$1"
   fi
   INSTALLBIN="~/.local/bin/$BINNAME"
   taskset -c 0-16 make -C $HOME/repos/futhark INSTALLBIN=$INSTALLBIN install
 }
 
-tput reset
-tput cup $LINES 0
-
 [ -f "/home/sortraev/.ghcup/env" ] && source "/home/sortraev/.ghcup/env" # ghcup-env
 
-
-function sshfut() {
-  sshpass -f $HOME/.ssh/ku_pass ssh "futhark0$1"
+function sshku() {
+  sshpass -f $HOME/.ssh/ku_pass ssh "$@"
 }
-zle -N sshfut
+
+zle -N sshku
+
+# tput reset
+tput cup $LINES 0

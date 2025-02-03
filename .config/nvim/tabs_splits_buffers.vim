@@ -5,8 +5,8 @@
 set splitright
 
 " highlight all occurrences of word under buffer using search
-" map <space> #*
-" nnoremap <space> :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+
+" map <space> #<C-o>
 nnoremap <space> :let @/ = '\<'.expand("<cword>").'\>'<cr>:set hls<cr>
 
 " fast search/replace

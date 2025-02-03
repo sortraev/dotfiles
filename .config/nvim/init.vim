@@ -7,5 +7,3 @@ source ~/.config/nvim/movement.vim
 source ~/.config/nvim/tabs_splits_buffers.vim
 source ~/.config/nvim/misc_keymaps.vim
 source ~/.config/nvim/file_types.vim
-
-hi! link CurSearch Search

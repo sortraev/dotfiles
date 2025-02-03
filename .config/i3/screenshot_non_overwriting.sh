@@ -5,7 +5,7 @@ if [ "$#" -ne 1 ]; then
 fi
 
 base=~/Pictures/Screenshots/$(date +%d-%m-%y_%H:%M:%S)
-out_filename=$base\_`ls $base*png 2> /dev/null | wc -l`.png
+out_filename=$base-`find $base*png | wc -l`.png
 
 arg="$1"
 if [ $arg = "fullscreen" ]; then

@@ -1,0 +1,467 @@
+set nocompatible
+filetype off
+set rtp+=~/.config/nvim/bundle/Vundle.vim
+call vundle#begin("~/.config/nvim/bundle")
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'sheerun/vim-polyglot'
+" Plugin 'psliwka/vim-smoothie'
+
+Plugin 'iamcco/markdown-preview.nvim'
+" for normal mode
+nmap <silent> <F8> <Plug>MarkdownPreview
+" for insert mode
+imap <silent> <F8> <Plug>MarkdownPreview
+" for normal mode
+nmap <silent> <F9> <Plug>StopMarkdownPreview
+" for insert mode
+imap <silent> <F9> <Plug>StopMarkdownPreview
+let g:mkdp_browser='google-chrome-stable'
+" let g:mkdp_theme = 'dark'
+set updatetime=100
+
+
+"""""""""""""""" lightline 
+Plugin 'itchyny/lightline.vim'
+let g:lightline = {}
+let g:lightline = {
+      \ 'colorscheme': 'seoul256',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'filename', 'modified'] ]
+      \ },
+      \ }
+
+      " \ 'colorscheme': 'PaperColor',
+
+Plugin 'scrooloose/nerdcommenter'
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 2
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 2
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '//' } }
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" Enable NERDCommenterToggle to check all selected lines is commented or not
+let g:NERDToggleCheckAllLines = 1
+let g:NERDCustomDelimiters = {
+    \ 'fut': { 'left': '--'},
+    \ 'c': { 'left': '//'},
+    \ 'opencl': { 'left': '//'},
+    \ 'fsharp': { 'left': '//'},
+    \ 'fasto': { 'left': '//'},
+    \ 'asm':   { 'left': ';'},
+    \ 'bib':   { 'left': '%'},
+\ }
+map <C-e> <plug>NERDCommenterToggle
+
+"" color schemes
+Plugin 'sainnhe/forest-night'
+Plugin 'morhetz/gruvbox'
+Plugin 'NLKNguyen/papercolor-theme'
+
+"" futhark syntax highlighting
+
+Plugin 'nvim-lua/plenary.nvim'
+
+Plugin 'tigion/nvim-asciidoc-preview'
+
+let g:haskell_indent_if=2
+
+call vundle#end()
+set encoding=utf8
+
+" use Unix as the standard file type
+set ffs=unix,mac
+
+"" set leader key.
+let mapleader=","
+let g:mapleader=","
+
+
+" Fast saving and quitting
+nmap <leader>w :w!<cr>
+nmap <leader>wq :wq!<cr>
+
+
+" (useful for handling the permission-denied error)
+command Sudow w !sudo tee % > /dev/null
+
+" Set 7 lines to the cursor - when moving vertically using j/k
+set scrolloff=7
+
+" Turn on the WiLd menu
+set wildmenu
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+
+
+" height of the command bar
+set cmdheight=1
+
+" disable '-- INSERT --' indicator
+set noshowmode
+
+
+" No annoying sound on errors
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+
+
+" Turn backup off, since most stuff is in SVN, git et.c anyway...
+set nobackup
+set nowb
+set noswapfile
+
+
+"" netrw configuration
+"" remove header from netrw.
+let g:netrw_banner    = 0
+" " tree list view
+let g:netrw_liststyle = 3
+" " nerdtree-like config.
+let g:netrw_altv = 1
+let g:netrw_winsize = 25
+
+
+"" enable undofile. TODO: is this command alone enough?
+set undofile
+
+" syn on. TODO: what does this do?
+set conceallevel=0
+
+
+" automatically change working directory to the currently open file.
+set autochdir
+
+set complete+=k
+
+
+"" yank and paste from global register/system clipboard using ctrl+y and ctrl+p
+set clipboard+=unnamedplus
+xnoremap <silent> p p:let @"=@0<CR>
+
+
+"""" enable/disable search highlighting
+" set hlsearch
+""" remove search highlighting using <leader><space>
+nmap <leader><space> :noh<cr>
+
+
+""" press * or # to jump to next/previous occurrence of word under cursor.
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+function! VisualSelection(direction, extra_filter) range
+    let l:saved_reg = @"
+    execute "normal! vgvy"
+
+let l:pattern = escape(@", "\\/.*'$^~[]")
+
+let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+if a:direction == 'gv'
+    call CmdLine("Ack '" . l:pattern . "' " )
+elseif a:direction == 'replace'
+    call CmdLine("%s" . '/'. l:pattern . '/')
+endif
+
+let @/ = l:pattern
+let @" = l:saved_reg
+endfunction
+
+""" return to last edit position when opening files (You want this!)
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+" set to auto update when a file is changed from the outside
+set autoread
+
+
+""" smart indent
+set si
+""" wrap lines
+set wrap
+""" auto indent
+set ai
+
+set number relativenumber
+set cursorline
+
+""" set theme
+set background=dark
+
+let g:gruvbox_italic=1
+let g:gruvbox_contrast_dark="soft"
+let g:gruvbox_improved_warnings=0
+colo gruvbox
+
+
+" Show matching brackets when text indicator is over them
+" How many tenths of a second to blink when matching brackets.
+set mat=2
+set showmatch
+
+""" A buffer becomes hidden when it is abandoned
+" set hid
+
+
+" sets how many lines of history VIM has to remember
+set history=500
+
+filetype plugin indent on
+
+""" no double spaces after periods when auto-wrapping
+""" (or line-joining with shift-j)
+set nojoinspaces
+
+set textwidth=80
+set formatoptions=t
+
+""" easy line-wrapping of current paragraph
+nmap <leader>gq gqip
+vmap <leader>gq gq
+
+
+""" tab completion
+imap <tab> <C-n>
+imap <A-tab> <C-p>
+
+
+
+" remove trailing whitespace from every line in file (ignore error message on no
+" trailing whitespace).
+nmap <leader>tws :keeppatterns %s/\s\+$//e<CR>:noh<CR>
+
+" treat \( as ( in haskell code in terms of jumping to matching brackets
+set cpoptions+=M
+
+
+" paste in visual mode without overwriting register with the overwritten text
+xnoremap p pgvy
+
+
+" configure backspace so it acts as it should act in insert mode.
+set backspace=eol,start,indent
+set whichwrap+=<,>,h,l
+
+" For regular expressions turn magic on
+set magic
+
+
+" Use spaces instead of tabs
+set expandtab
+
+" Be smart when using tabs ;)
+set smarttab
+
+" width of tab
+set shiftwidth=2
+set tabstop=4
+
+" Linebreak ??
+" set lbr
+
+
+"" yank and paste from global register/system clipboard using ctrl+y and ctrl+p
+set clipboard+=unnamedplus
+
+
+"" quick make in files
+nmap <leader>m :w<CR>:!make<cr>
+nmap <leader>M :w<CR>:!make<space>
+
+
+"" easy exit insert mode while in terminal mode
+tnoremap <s-tab> <C-\><C-n>
+""" quick up/down scrolling with ctrl + {k, j}.
+map <C-k> 3k
+map <C-j> 3j
+
+
+""" enter insert at beginning of next word; end of this word; or beginning of
+""" this word.
+nmap <S-w> wi
+nmap <S-e> ea
+nmap <S-b> bi
+
+""" select current paragraph under the cursor (or the next, if none under the cursor)
+nmap <leader>[] }kV{j$
+
+""" easier multiline insert/append while in visual mode
+vmap i I
+vmap a A
+
+
+""" disable Enter key from moving down one line in normal mode.
+nmap <CR> <Nop>
+
+
+" ignore case when searching
+set ignorecase
+set wildignorecase
+
+
+" case sensitive search when one or more characters in search string
+" is upper case; else case insensitive.
+set smartcase
+" makes search act like search in modern browsers.
+set incsearch
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Moving around, tabs, windows and buffers
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" open split windows to the right of currently focused window
+set splitright
+
+" highlight all occurrences of word under buffer using search
+
+" map <space> #<C-o>
+nnoremap <space> :let @/ = '\<'.expand("<cword>").'\>'<cr>:set hls<cr>
+
+" fast search/replace
+nmap <leader>sr :%s/
+nmap <leader>gsr :%s//g<Left><Left>
+vmap <leader>sr :s/
+vmap <leader>gsr :s//g<Left><Left>
+
+" Smart way to move between windows
+
+" open new splits with alt+shift+{j, l}.
+nnoremap <A-J> :sp<cr>
+nnoremap <A-L> :vsp<cr>
+map <A-l> <C-W>l
+map <A-j> <C-W>j
+map <A-k> <C-W>k
+map <A-h> <C-W>h
+
+
+" Save and close the current buffer
+map <leader>bd :w<CR>:Bclose<CR>
+map <leader>sd :w<CR>:Bclose<CR>
+
+map <leader>twh :set tw=8000<CR>
+map <leader>twl :set tw=80<CR>
+
+" Close all the buffers
+map <leader>ba :bufdo bd<cr>
+
+" show list of open buffers
+map <leader>bs :buffers<cr>
+
+map <leader>l :bnext<cr>
+map <leader>h :bprevious<cr>
+
+
+map <leader>e :e ./
+
+
+
+" Specify the behavior when switching between buffers
+try
+  set switchbuf=useopen,usetab,newtab
+  set stal=2
+catch
+endtry
+
+" only show tab bar when more than one tabs open
+set showtabline=1
+
+
+" don't close window when deleting a buffer
+command! Bclose call <SID>BufcloseCloseIt()
+function! <SID>BufcloseCloseIt()
+   let l:currentBufNum = bufnr("%")
+   let l:alternateBufNum = bufnr("#")
+
+   if buflisted(l:alternateBufNum)
+     buffer #
+   else
+     bnext
+   endif
+
+   if bufnr("%") == l:currentBufNum
+     new
+   endif
+
+   if buflisted(l:currentBufNum)
+     execute("bdelete".l:currentBufNum)
+   endif
+endfunction
+" enter normal mode using shift+tab instead of escape.
+imap <s-tab> <Esc>
+vmap <s-tab> <Esc>
+nmap <s-tab> <Esc>
+
+"" enter normal mode using Ctrl+c instead of escape.
+imap <c-q> <Esc>
+vmap <c-q> <Esc>
+nmap <c-q> <Esc>
+
+
+
+nmap <A-c> :set cursorcolumn!<cr>
+nmap <A-C> :set cursorline!<cr>
+
+
+""" remove default keyinding of Shift-k to
+""" man-page-lookup of word under cursor.
+map <S-k> <Nop>
+
+""" easy begin/end wrapping of words in latex
+nmap <leader>be lbi\begin{<Esc>lyeea}<CR>\end{<Esc>pa}<Esc>
+
+let g:term_buf = 0
+let g:term_win = 0
+function! TermToggle(height)
+    if win_gotoid(g:term_win)
+        hide
+    else
+        botright new
+        exec "resize " . a:height
+        try
+            exec "buffer " . g:term_buf
+        catch
+            call termopen($SHELL, {"detach": 0})
+            let g:term_buf = bufnr("")
+            " set nonumber
+            set norelativenumber
+            set signcolumn=no
+        endtry
+        startinsert!
+        let g:term_win = win_getid()
+    endif
+endfunction
+
+" Toggle terminal on/off (neovim)
+nnoremap <C-t> :call TermToggle(24)<CR>
+inoremap <C-t> <Esc>:call TermToggle(24)<CR>
+tnoremap <C-t> <C-\><C-n>:call TermToggle(24)<CR>
+
+" Terminal go back to normal mode
+tnoremap <Esc> <C-\><C-n>
+tnoremap :q! <C-\><C-n>:q!<CR>
+
+autocmd BufNewFile,BufRead *.tex set filetype=tex
+
+autocmd FileType haskell,markdown colorscheme everforest
+" autocmd FileType markdown colorscheme everforest
+
+autocmd BufNewFile,BufReadPost *.asm,*.s,*.disasm set filetype=asm
+autocmd BufNewFile,BufReadPost *.cl set filetype=opencl
+autocmd FileType asm set formatoptions+=cro
+
+autocmd BufNewFile,BufReadPost *.gdb set filetype=gdb
+
+autocmd FileType markdown 
+    \ set formatoptions-=q
+    \ | set formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\|^\\s*\[-*+]\\s\\+
+    \ | set shiftwidth=2
+
+autocmd FileType haskell,fut,fsharp set iskeyword+='

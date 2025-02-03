@@ -11,6 +11,7 @@ let g:mapleader=","
 " Fast saving and quitting
 nmap <leader>w :w!<cr>
 nmap <leader>wq :wq!<cr>
+imap <leader>wq <Esc>:wq!<cr>
 
 
 " (useful for handling the permission-denied error)
@@ -118,20 +119,12 @@ set number relativenumber
 set cursorline
 
 """ set theme
-set t_Co=256
-" set background=light
 set background=dark
 
 let g:gruvbox_italic=1
 let g:gruvbox_contrast_dark="soft"
 let g:gruvbox_improved_warnings=0
 colo gruvbox
-"
-"
-set t_Co=256   " This is may or may not needed.
-
-" set background=light
-" colo PaperColor
 
 
 " Show matching brackets when text indicator is over them

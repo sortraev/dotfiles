@@ -12,13 +12,32 @@ syn keyword FutharkBinding def let entry nextgroup=FutIdentifier skipwhite skipe
 syn keyword PreProc module open import nextgroup=FutIdentifier skipwhite skipempty
 syn keyword FutharkCase match case
 
-syn keyword function map map1 map2 map3 map4 map5 stream_map stream_map_per
-syn keyword function reduce reduce_comm scan filter partition
-syn keyword function stream_red stream_red_per stream_seq iota
-syn keyword function replicate scatter drop
-syn keyword function rotate split flatten unflatten
-syn keyword function curry uncurry
-syn keyword function id const
+syn keyword function zip zip2 zip3 zip4 zip5 unzip unzip2 unzip3 unzip4 unzip5
+syn keyword function length null head last tail init take drop
+syn keyword function sized
+syn keyword function split reverse concat rotate
+syn keyword function iota indices
+syn keyword function replicate rep
+syn keyword function copy manifest
+syn keyword function flatten flatten_3d flatten_4d unflatten unflatten_3d unflatten_4d
+syn keyword function transpose
+syn keyword function and or
+syn keyword function foldl foldr
+syn keyword function tabulate tabulate_2d tabulate_3d
+syn keyword function r32 t32 r64 t64
+syn keyword function not
+syn keyword function opaque trace break
+syn keyword function jvp2 vjp2 jvp vjp
+syn keyword function flip curry uncurry
+syn keyword function const id
+syn keyword function iterate iterate_until iterate_while
+syn keyword function map map1 map2 map3 map4 map5
+syn keyword function reduce reduce_comm scan
+syn keyword function hist reduce_by_index reduce_by_index_2d reduce_by_index_3d
+syn keyword function filter partition partition2
+syn keyword function all any
+syn keyword function spread scatter scatter_2d scatter_3d
+
 
 syn keyword boolean true false
 
@@ -38,7 +57,7 @@ syn match FutharkOperator  "\(++\|==\|!=\|>->\|<-<\||>\|<|\)" containedin=Futhar
 syn match FutharkLambdaOperator "(\ *\(++\|==\|!=\|>->\|<-<\||>\|<|\)\ *)"
 syn match FutharkLambdaOperator "(\ *\(+\|-\|*\|/\|>\|<\|%\|!\|&\||\|^\)\ *)"
 syn match FutharkLambdaOperator "(\ *\(\.[1-9][0-9]*\)\ *)"
-syn match FutharkLambdaOperator /).[1-9][0-9]*/ms=s+1
+syn match FutharkLambdaOperator /)\.[1-9][0-9]*/ms=s+1
 
 syn region string start=/"/ skip=/\\"/ end=/"/ keepend excludenl
 

@@ -11,7 +11,8 @@ autocmd FileType asm set formatoptions+=cro
 autocmd BufNewFile,BufReadPost *.gdb set filetype=gdb
 
 autocmd FileType markdown 
-    \ set formatoptions-=q |
-    \ set formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\|^\\s*\[-*+]\\s\\+
+    \ set formatoptions-=q
+    \ | set formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\|^\\s*\[-*+]\\s\\+
+    \ | set shiftwidth=2
 
 autocmd FileType haskell,fut,fsharp set iskeyword+='

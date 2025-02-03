@@ -130,6 +130,8 @@ mode "$system" {
 
 
 ##### workspace specific settings
+#
+
 
 
 ## Workspace names.
@@ -146,10 +148,23 @@ set $ws8 8:o
 # set $ws9 "topsecret ;);)"
 set $ws9 9
 
+set $display_laptop "eDP"
+set $display_hdmi "HDMI-A-0"
+
+workspace $ws1 output $display_laptop
+workspace $ws2 output $display_laptop
+workspace $ws3 output $display_laptop
+workspace $ws4 output $display_laptop
+workspace $ws5 output $display_hdmi
+workspace $ws6 output $display_hdmi
+workspace $ws7 output $display_hdmi
+workspace $ws8 output $display_hdmi
+workspace $ws9 output $display_laptop
+
+# mod+{h,j,k,l} cannot move focus between displays.
+# focus_wrapping workspace
+
 # strip_workspace_numbers yes
-
-# bar { strip_workspace_numbers yes }
-
 
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
@@ -272,8 +287,7 @@ bindsym $mod+d exec rofi -show drun
 
 ### ncurses sound mixer
 bindsym $mod+m exec pavucontrol
-bindsym $mod+Ctrl+m exec urxvt -e alsamixer
-# bindsym $mod+Shift+m exec urxvt -e pavucontrol
+bindsym $mod+Ctrl+m exec st -e alsamixer
 
 
 # nemo file manager.
@@ -296,13 +310,7 @@ bindsym $mod+$alt+j exec ~/.config/i3/i3_resize.sh down  128
 ## fn keys
 
 # brightness control. hold shift to increase/decrease in smaller steps; hold ctrl
-# to jump straight to 50% or 1% brightness (the latter is useful when in bed! :D)
-# bindsym XF86MonBrightnessUp   exec "xbacklight -inc 10"
-# bindsym XF86MonBrightnessDown exec "xbacklight -dec 10"
-# bindsym Shift+XF86MonBrightnessUp   exec "xbacklight -inc 5"
-# bindsym Shift+XF86MonBrightnessDown exec "xbacklight -dec 5"
-# bindsym Ctrl+XF86MonBrightnessUp   exec "xbacklight -set 50"
-# bindsym Ctrl+XF86MonBrightnessDown exec "xbacklight -set 1"
+# to jump straight to 50% or 1% brightness
 
 bindsym XF86MonBrightnessUp         exec "brightnessctl set 10%+" 
 bindsym XF86MonBrightnessDown       exec "brightnessctl set 10%-"
@@ -311,11 +319,12 @@ bindsym Shift+XF86MonBrightnessDown exec "brightnessctl set 5%-"
 bindsym Ctrl+XF86MonBrightnessUp    exec "brightnessctl set 50%"
 bindsym Ctrl+XF86MonBrightnessDown  exec "brightnessctl set 1%"
 
-
 # volume control.
-bindsym XF86AudioLowerVolume exec "pactl set-sink-volume @DEFAULT_SINK@ -5%"
-bindsym XF86AudioRaiseVolume exec "pactl set-sink-volume @DEFAULT_SINK@ +5%"
-bindsym XF86AudioMute        exec "pactl set-sink-mute @DEFAULT_SINK@ toggle"
+bindsym XF86AudioLowerVolume exec ~/.config/i3/volume_control.sh down
+bindsym XF86AudioRaiseVolume exec ~/.config/i3/volume_control.sh up
+bindsym XF86AudioMute        exec ~/.config/i3/volume_control.sh mute
+bindsym Shift+XF86AudioLowerVolume exec ~/.config/i3/volume_control.sh low
+bindsym Shift+XF86AudioRaiseVolume exec ~/.config/i3/volume_control.sh high
 ### app specifics
 
 # set border width to 2 for all windows but urxvt, which gets 1.

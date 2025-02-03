@@ -1,17 +1,55 @@
 setlocal indentexpr=FutharkIndent()
 
+function! s:stripComment(line)
+  if line =~ '^\s*--\(-*\s\+\|$\)'
+    return ''
+  else
+    let l:stripped = split(a:line, '-- ')
+    if len(l:stripped) > 1
+      return substitute(l:stripped[0], '\s*$', '', '')
+    else
+      return line
+    endif
+  endif
+endfunction
+
+
 function! FutharkIndent()
-  let line = getline(v:lnum)
-  let prevNum = prevnonblank(v:lnum)
-  let prev = getline(prevNum)
+  let l:thisline = getline(v:lnum)
+  let prevlineno = prevnonblank(v:lnum)
+  let l:prevline = getline(prevlineno)
 
   " Indent extra if matching these patterns
-  if prev =~ "=$" || prev =~ "->$" || prev =~ "do$"
-    return indent(prevNum) + &shiftwidth
+  if l:prevline =~ "=$" || l:prevline =~ "->$" || l:prevline =~ "do$"
+    return indent(prevlineno) + &shiftwidth
+  endif
+  
+
+  " IF HANDLING
+  if l:prevline =~ '\C\<if\>'
+    if l:prevline !~ '\C.*\<else\>'
+    endif
+  endif
+  " if l:prevline !~ '\C\<if\>.*\<else\>'
+  "   let l:s = match(l:prevline, '\C\<if\>.*\&.*\zs\<then\>')
+  "   if l:s > 0
+  "     return l:s
+  "   endif
+  "
+  "   let l:s = match(l:prevline, '\C\<if\>')
+  "   if l:s > 0
+  "     return l:s + &shiftwidth
+  "   endif
+  "   let l:s = match(l:prevline, '\C\<else\>')
+  "   if l:s > 0
+  "     return l:s + &shiftwidth
+  "   endif
+  " endif
+
 
   " Else keep same level of indentation
-  else
-    return indent(prevNum)
+  " else
+  return indent(prevlineno)
 
-  endif
+  " endif
 endfunction

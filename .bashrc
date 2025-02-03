@@ -16,3 +16,5 @@ function sshfut() {
   sshpass -f $HOME/.ssh/ku_pass ssh "futhark0$1"
 }
 export -f sshfut # bash only! for zsh, use `zle -N sshfut`.
+
+[[ :$PATH: == *:$HOME/.local/bin:* ]] || export PATH=$HOME/.local/bin:$PATH

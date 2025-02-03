@@ -4,8 +4,11 @@ vmap <s-tab> <Esc>
 nmap <s-tab> <Esc>
 
 "" enter normal mode using Ctrl+c instead of escape.
-imap <c-c> <Esc>
-vmap <c-c> <Esc>
+imap <c-q> <Esc>
+vmap <c-q> <Esc>
+nmap <c-q> <Esc>
+
+
 
 nmap <A-c> :set cursorcolumn!<cr>
 nmap <A-C> :set cursorline!<cr>
