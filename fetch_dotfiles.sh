@@ -39,6 +39,7 @@ cp $HOME/.dir_colors .
 cp $HOME/.gitconfig  .
 cp $HOME/.Xresources .
 cp $HOME/.xinitrc    .
+cp $HOME/.ideavimrc  .
 
 
 # system stuff (everything in _root should simply be installed using

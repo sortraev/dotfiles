@@ -1,0 +1,108 @@
+let mapleader=","
+
+"" Basic Settings
+"" ========================================================
+set scrolloff=7
+set number relativenumber
+
+set showmode showcmd
+
+"" Search stuff
+set magic
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
+
+"" Misc
+set visualbell
+set clipboard+=unnamedplus
+
+
+"" Let h and l switch lines if used at beginning/end of a line.
+set whichwrap+=<,>,h,l
+
+"" Allow jumping between matching angular brackets
+set matchpairs+=<:>
+
+
+"" Plugins
+"" ========================================================
+
+set which-key
+set surround
+set highlightedyank
+set nerdtree
+set highlightedyank
+
+set commentary
+
+" Easymotion settings
+set easymotion
+set notimeout
+
+"" Keymaps
+"" ========================================================
+
+
+" open NERDTree
+map <leader>x :NERDTreeToggle<CR>
+
+" inoremap <C-q> <Esc>
+nnoremap <S-tab> <Esc>
+nmap <S-tab> <Esc>
+" disable highlighting (but keep last search)
+nmap <leader><space> :nohl<CR>
+
+" highlight all occurrences of word under cursor using search
+nnoremap <space> #<C-o>
+
+" faster scrolling
+map <C-k> 3k
+map <C-j> 3j
+
+nmap W wi
+nmap E ea
+nmap B bi
+
+" fast (global) search/replace
+nmap <leader>sr :%s/
+nmap <leader>gsr :%s//g<Left><Left>
+vmap <leader>sr :s/
+vmap <leader>gsr :s//g<Left><Left>
+
+map <A-l> <C-W>l
+map <A-j> <C-W>j
+map <A-k> <C-W>k
+map <A-h> <C-W>h
+
+imap <C-q> <Esc>
+
+
+"" Idea action shortcuts
+"" ========================================================
+
+" code navigation
+nmap <leader>gd <action>(GotoDeclaration)
+nmap <leader>gy <action>(GotoTypeDeclaration)
+nmap <leader>gi <action>(GotoImplementation)
+nmap <leader>gu <action>(ShowUsages)
+nmap <leader>gt <action>(GotoTest)
+nmap <leader>gf <action>(Forward)
+nmap <leader>gb <action>(Back)
+
+" misc
+map <C-e> <action>(CommentByLineComment)
+nmap <leader>m <action>(Run)
+nmap <leader>M <action>(Stop)
+nmap <leader>bu <action>(CompileDirty)
+map <leader>br <action>(ToggleLineBreakpoint)
+nmap <leader>l <action>(NextTab)
+nmap <leader>h <action>(PreviousTab)
+
+nmap <leader>tws :keeppatterns %s/\s\+$//g<Enter>
+
+
+
+nmap <leader>pom :e pom.xml<Enter>
+nmap <leader>prop :e application.properties<Enter>
