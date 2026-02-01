@@ -1,0 +1,51 @@
+### ENABLE SCRIPTING ADDITIONS
+# yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+# sudo yabai --load-sa
+
+yabai -m config layout bsp
+
+# new windows spawn down or right
+yabai -m config window_placement second_child
+
+### PADDING
+yabai -m config top_padding 4
+yabai -m config bottom_padding 4
+yabai -m config left_padding 4
+yabai -m config right_padding 4
+yabai -m config window_gap 5
+
+yabai -m config auto_balance off
+yabai -m config split_ratio 0.50
+yabai -m config layout
+
+
+### MOUSE STUFF
+# yabai -m config mouse_follows_focus on
+# yabai -m config focus_follows_mouse autofocus
+
+# alt+left/right click to drag/resize
+yabai -m config mouse_modifier alt
+yabai -m config mouse_action1 move
+yabai -m config mouse_action2 resize
+
+# drop window on another to swap
+# yabai -m mouse_drop_action swap
+
+# when switching space/display, focus last focused window in that space/display
+# yabai -m signal --add event=space_changed action="yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id)"
+# yabai -m signal --add event=display_changed action="yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id)"
+
+
+### APP SPECIFIC RULES
+yabai -m rule --add app="^System Settings$" manage=off
+yabai -m rule --add app="^Finder$" manage=off
+yabai -m rule --add app="^Ukelele$" manage=off
+yabai -m rule --add app="^Microsoft Teams$" manage=off
+# do not manage Firefox picture-in-picture
+yabai -m rule --add label="Firefox PIP" app="^Firefox$" title="^(Picture-in-Picture)$" manage=off
+yabai -m rule --add label="Demo lommebok" app="^Demo lommebok$" title="^Demo lommebok$" manage=off
+
+yabai -m rule --add app="^Simulator" manage=off
+
+# make yabai respect sketchybar. might have to tweak the last parameter.
+yabai -m config external_bar all:36:0

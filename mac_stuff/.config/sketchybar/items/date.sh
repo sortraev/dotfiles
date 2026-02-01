@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+COLOR="$BLUE"
+
+sketchybar --add item calendar right \
+	--set calendar update_freq=10 \
+	label.color="$COLOR" \
+	label.padding_right=10 \
+	background.height=26 \
+	background.corner_radius="$CORNER_RADIUS" \
+	background.padding_left=5 \
+	background.padding_right=5 \
+	background.border_width="$BORDER_WIDTH" \
+	background.border_color="$COLOR" \
+	background.color="$BAR_COLOR" \
+	script="$PLUGIN_DIR/date.sh"
